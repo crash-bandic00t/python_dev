@@ -10,11 +10,13 @@
 # В rand_nums надо передать ______ (число)
 """
 
-from task import rand_nums
+from task1 import rand_nums
 
-all_num = []
+nums_odd = (nums for nums in rand_nums(21) if nums % 2 != 0)
 
-odd_list = []
-
-
+cnt = 1
+for i in nums_odd:
+    print(f'{cnt} {i}')
+    cnt += 1
+    
 
