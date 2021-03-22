@@ -14,8 +14,8 @@
 import json
 
 
-users = open('e:\\GeekBrains\\python_dev\\1 fourth\\basics_python\\lesson6\\users.csv', encoding='utf-8')
-hobbies = open('e:\\GeekBrains\\python_dev\\1 fourth\\basics_python\\lesson6\\hobby.csv', encoding='utf-8')
+users = open('f:\\GeekBrains\\python_dev\\1_fourth\\basics_python\\lesson6\\users.csv', encoding='utf-8')
+hobbies = open('f:\\GeekBrains\\python_dev\\1_fourth\\basics_python\\lesson6\\hobby.csv', encoding='utf-8')
 users_hobby = {}
 user = users.readline().strip()
 hobby = hobbies.readline().strip()
@@ -30,7 +30,7 @@ if hobby:
     exit(1)
 users.close()
 hobbies.close()
-with open('e:\\GeekBrains\\python_dev\\1 fourth\\basics_python\\lesson6\\users_hobby_task3.json', 'w', encoding='utf-8') as uh: #Передаю в словарь через сериализатор. Так как иначе сделать словарь просто так не получится
+with open('f:\\GeekBrains\\python_dev\\1_fourth\\basics_python\\lesson6\\users_hobby_task3.json', 'w', encoding='utf-8') as uh: #Передаю в словарь через сериализатор. Так как иначе сделать словарь просто так не получится
     uh.write(json.dumps(
         users_hobby, 
         ensure_ascii=False, 
