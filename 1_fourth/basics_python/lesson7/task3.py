@@ -16,8 +16,8 @@ import os
 import shutil
 
 
-for root, folders, files in os.walk(r"f:\GeekBrains\python_dev\1_fourth\basics_python\lesson7\my_project"):
-    for file_name in files:
-        if '.html' in file_name:
-            os.makedirs()
-            shutil.copyfile(os.path.join(root, file_name), )
+for root, dirs, files in os.walk(r"f:\GeekBrains\python_dev\1_fourth\basics_python\lesson7\my_project"):
+    for dir_name in dirs:
+        if dir_name == 'templates':
+            shutil.copytree(f'{root}\\templates', r'f:\GeekBrains\python_dev\1_fourth\basics_python\lesson7\my_project\templates', dirs_exist_ok=True)
+            
