@@ -19,30 +19,30 @@
 случайных действий: go, stop, turn со случайными параметрами. 
 После каждого действия показывайте статус автомобиля.
 """
-from random import randint
+from random import randint, choice
 
 
 class Car:
     speed_limit = 0
     speed = 0
-    turn = None
+    turn = 'straight'
 
     def __init__(self, name, color):
         self.name = name
         self.color = color
+    
+    def __str__(self):
+        return f'{self.name} {self.color}'
 
     def go(self, speed):
         self.speed = speed
     
     def stop(self):
         self.speed = 0
-        self.turn = None
+        self.turn = 'straight'
 
-    def turn(self, direction):
+    def turns(self, direction):
         self.turn = direction
-
-    def is_police(self):
-        return False
     
     def speed_check(self):
         if self.speed_limit != 0:
@@ -52,13 +52,11 @@ class Car:
     
     def get_status(self):
         if self.speed == 0:
-            result = f'{self.name} {self.color} {self.speed}'
+            result = f'{self} {self.speed}'
         elif self.speed_check():
-            result = f'{self.name} {self.color} {self.speed} ПРЕВЫШЕНИЕ! {self.turn}'
+            result = f'{self} {self.speed} ПРЕВЫШЕНИЕ! {self.turn}'
         elif not self.speed_check():
-            result = f'{self.name} {self.color} {self.speed} {self.turn}'
-        if self.is_police():
-            result = f'POLICE {result}'
+            result = f'{self} {self.speed} {self.turn}'
         return result
 
 class TownCar(Car):
@@ -67,11 +65,36 @@ class TownCar(Car):
 class WorkCar(Car):
     speed_limit = 40
 
+class PoliceCar(Car):
+    def __str__(self):
+        return f'POLICE {self.name} {self.color}'
+
+class SportCar(Car):
+    pass
+
 town = TownCar('Nissan', 'blue')
 work = WorkCar('UAZ', 'black')
+pol = PoliceCar('Ford', 'white')
+sport = SportCar('Ferrari', 'red')
 
+car_list = [town, work, pol, sport]
+turn_list = ['straight', 'right', 'left', 'backward']
 
-print(town.get_status())
-town.go(70)
-print(town.get_status())
-# print(work.speed)
+for i in range(10):
+    rand_func = randint(0, 2)
+    if rand_func == 0:
+        print('Меняем скорость')
+        for j in car_list:
+            j.go(randint(1,100))
+            print(j.get_status())
+    if rand_func == 1:
+        print('Останавливаемся')
+        for j in car_list:
+            j.stop()
+            print(j.get_status())
+    if rand_func == 2:
+        print('Поворачиваем')
+        for j in car_list:
+            j.turns(choice(turn_list))
+            print(j.get_status())
+    print('-----------')
