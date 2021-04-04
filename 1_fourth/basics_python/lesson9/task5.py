@@ -23,58 +23,55 @@ from random import randint
 
 
 class Car:
-    car_status = {
-        'speed': 0,
-        'turn': None,
-    }
+    speed_limit = 0
+    speed = 0
+    turn = None
 
-    def __init__(self, color, name):
-        self.color = color
+    def __init__(self, name, color):
         self.name = name
-    
+        self.color = color
+
     def go(self, speed):
-        self.car_status["speed"] = speed
+        self.speed = speed
     
     def stop(self):
-        self.car_status["speed"] = 0
-        self.car_status["turn"] = None
+        self.speed = 0
+        self.turn = None
 
     def turn(self, direction):
-        self.car_status[turn] = direction
-
-    def get_status(self):
-        if self.car_status["speed"] == 0:
-            return f'{self.name}, {self.color}, машина не двигается'
-        else:
-            return f'{self.name}, {self.color}, скорость {self.car_status["speed"]}, направление {self.car_status["turn"]}'
-
-class TownCar(Car):
-
-    speed_limit = 60
-
-class SportCar(Car):
-
-    pass
-
-class WorkCar(Car):
-
-    speed_limit = 40
-
-class PoliceCar(Car):
+        self.turn = direction
 
     def is_police(self):
-        return True 
+        return False
+    
+    def speed_check(self):
+        if self.speed_limit != 0:
+            if self.speed > self.speed_limit:
+                return True
+        return False
+    
+    def get_status(self):
+        if self.speed == 0:
+            result = f'{self.name} {self.color} {self.speed}'
+        elif self.speed_check():
+            result = f'{self.name} {self.color} {self.speed} ПРЕВЫШЕНИЕ! {self.turn}'
+        elif not self.speed_check():
+            result = f'{self.name} {self.color} {self.speed} {self.turn}'
+        if self.is_police():
+            result = f'POLICE {result}'
+        return result
 
-a = TownCar('black', 'Nissan')
-b = SportCar('red', 'Ferrari')
-c = WorkCar('black', 'UAZ')
-d = PoliceCar('black', 'Ford')
+class TownCar(Car):
+    speed_limit = 60
 
-# list_of_actions = [b.go(), stop(), turn()]
-# list_of_direction = ['left', 'right','straight']
+class WorkCar(Car):
+    speed_limit = 40
 
-# for i in range(10):
-#     b.list_of_actions[randint(0,2)]
-#     b.get_status()
+town = TownCar('Nissan', 'blue')
+work = WorkCar('UAZ', 'black')
 
-print(b.__class__.__name__)
+
+print(town.get_status())
+town.go(70)
+print(town.get_status())
+# print(work.speed)
