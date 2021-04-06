@@ -51,3 +51,4 @@ list_of_cloth = [choice(list_of_types)(randint(30,200)) for i in range(10)]
 
 for i in list_of_cloth:
     print(i.cloth_size)
+    
