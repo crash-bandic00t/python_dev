@@ -1,6 +1,7 @@
 """
-Продолжить работу над первым заданием. Разработайте методы, которые отвечают за приём оргтехники на склад и передачу в определённое подразделение компании.
-Для хранения данных о наименовании и количестве единиц оргтехники, а также других данных, можно использовать любую подходящую структуру (например, словарь).
+Продолжить работу над вторым заданием.
+Реализуйте механизм валидации вводимых пользователем данных.
+Например, для указания количества принтеров, отправленных на склад, нельзя использовать строковый тип данных.
 """
 class Sklad:
     rows_cnt = 5            # ряды
@@ -58,14 +59,19 @@ class Sklad:
 class Equipment:
 
     def __init__(self, model, position_row, position_shelf, department):
-        if self.check_position(position_row, position_shelf): # проверяем есть ли вообще на скаде такая полка
-            self.model = model
-            self.position_row = position_row
-            self.position_shelf = position_shelf
-            self.department = department
-            self.add_to_storage(position_row, position_shelf)
-        else:
-            print(f'{self.equip_type} {model} не влез на склад либо его место занято! Выберите другое место для хранения.')
+        try:
+            position_row = int(position_row)
+            position_shelf = int(position_shelf)
+            if self.check_position(position_row, position_shelf): # проверяем есть ли вообще на скаде такая полка
+                self.model = model
+                self.position_row = position_row
+                self.position_shelf = position_shelf
+                self.department = department
+                self.add_to_storage(position_row, position_shelf)
+            else:
+                print(f'{self.equip_type} {model} не влез на склад либо его место занято! Выберите другое место для хранения.')
+        except:
+            print(f'{self.equip_type} {model} имеет некорректное описание. Нумерация полки и ряда должно быть целым числом!')
     
     @staticmethod
     def check_position(position_row, position_shelf):   # проверка есть ли такое место на складе
@@ -96,8 +102,8 @@ class Xerox(Equipment):
     equip_type = 'Ксерокс'
 
 
-a = Printers('Brother', 1, 1, 'accounting')
-b = Printers('HP', 1, 1, 'it')
+a = Printers('Brother', 1, 3, 'accounting')
+b = Printers('HP', 1, 2, 'it')
 c = Scanners('Canon', 2, 4, 'marketing')
 d = Scanners('HP', 3, 4, 'accounting')
 e = Scanners('Kyocera', 5, 2, 'marketing')
