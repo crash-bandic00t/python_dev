@@ -48,7 +48,9 @@ CREATE TABLE products (
     price INT UNSIGNED,
     discount_id BIGINT UNSIGNED NULL,
     FOREIGN KEY (discount_id) REFERENCES discounts(id),
-    FOREIGN KEY (category_id) REFERENCES product_category(id)
+    FOREIGN KEY (category_id) REFERENCES product_category(id),
+
+    INDEX products_name (name)
 );
 
 DROP TABLE IF EXISTS media_types;
@@ -80,7 +82,9 @@ DROP TABLE IF EXISTS likes;
 CREATE TABLE likes(
 	id SERIAL,
     product_id BIGINT UNSIGNED NOT null,
-    FOREIGN KEY (product_id) REFERENCES products(id)
+    user_id BIGINT UNSIGNED NOT null,
+    FOREIGN KEY (product_id) REFERENCES products(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 DROP TABLE IF EXISTS products_desc;
@@ -98,7 +102,9 @@ CREATE TABLE orders(
     user_id BIGINT UNSIGNED NOT null,
     created_at DATETIME DEFAULT NOW(),
     updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
-    status ENUM('created', 'declined', 'processed', 'sent', 'delivered'),
+    status ENUM('created', 'declined', 'executed'),
+    delivery_status ENUM('packaging', 'sent', 'delivered'),
+    payment_status ENUM('paid', 'not paid'),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
